@@ -132,20 +132,29 @@ python app_complete.py
 - Documentation des fonctionnalités de sécurité
 
 ### 👤 **Création de compte** (`/create`)
+- **Interface intuitive** : Template `create.html` avec formulaire guidé
+- **Validation frontend** : Contrôles JavaScript temps réel
 - **Formulaire simple** : Saisie du nom d'utilisateur uniquement
 - **Génération automatique** :
   - Mot de passe complexe 24 caractères
   - Secret 2FA compatible Google Authenticator
   - QR Codes pour sauvegarde et configuration
 - **Affichage sécurisé** : QR Codes en base64, pas de stockage d'images
+- **Page de succès** : Template `create_success.html` avec QR Codes et instructions
 
 ### 🔑 **Connexion** (`/login`)
-- **Triple authentification** :
-  - Nom d'utilisateur
-  - Mot de passe généré
-  - Code 2FA (6 chiffres)
-- **Validation temps réel** du code TOTP
-- **Gestion expiration** : Redirection automatique si compte expiré
+- **Interface sécurisée** : Template `login.html` avec triple authentification
+- **Champs optimisés** :
+  - Nom d'utilisateur (auto-complétion sécurisée)
+  - Mot de passe (24 caractères, masqué)
+  - Code 2FA (formatage automatique 6 chiffres)
+- **Validation temps réel** :
+  - Formatage automatique du code 2FA
+  - Contrôles JavaScript avant envoi
+  - Vérification TOTP côté serveur
+- **Gestion expiration** : Détection automatique + redirection vers création
+- **Messages d'aide** : Guide Google Authenticator intégré
+- **Page de succès** : Template `login_success.html` après authentification
 
 ### 🔧 **Interface de test** (`/test`)
 - **Pour développeurs** : Test des APIs et endpoints

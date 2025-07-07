@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer un compte - MSPR</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>👤 Création de compte sécurisé</h1>
+        <p>Créez un nouveau compte avec authentification double facteur (2FA)</p>
+        
+        <!-- Messages flash -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="endpoint {{ 'success' if category == 'success' else 'error' if category == 'error' else 'warning' }}">
+                            <strong>{{ '✅' if category == 'success' else '❌' if category == 'error' else '⚠️' }}</strong> {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        <div class="endpoint">
+            <h2>🔐 Génération automatique de vos identifiants</h2>
+            <p>Votre compte sera créé avec :</p>
+            <ul>
+                <li><strong>Mot de passe complexe de 24 caractères</strong> - généré automatiquement</li>
+                <li><strong>QR Code du mot de passe</strong> - pour sauvegarde facile</li>
+                <li><strong>Secret 2FA</strong> - compatible Google Authenticator</li>
+                <li><strong>QR Code 2FA</strong> - pour configuration mobile</li>
+                <li><strong>Chiffrement complet</strong> - toutes vos données sont sécurisées</li>
+                <li><strong>Validité 6 mois</strong> - renouvellement automatique des identifiants</li>
+            </ul>
+        </div>
+        
+        <div class="endpoint" style="border-left-color: #28a745;">
+            <h2>📝 Formulaire de création</h2>
+            <form method="POST" action="/create">
+                <div style="margin-bottom: 20px;">
+                    <label for="username" style="display: block; margin-bottom: 8px; font-weight: bold;">
+                        👤 Nom d'utilisateur :
+                    </label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username" 
+                        required 
+                        maxlength="50"
+                        pattern="^[a-zA-Z0-9_-]+$"
+                        title="Lettres, chiffres, tirets et underscores uniquement"
+                        style="width: 100%; max-width: 300px; padding: 10px; border: 2px solid #ddd; border-radius: 5px; font-size: 16px;"
+                        placeholder="Saisissez votre nom d'utilisateur"
+                    >
+                    <small style="color: #666; font-size: 12px;">
+                        Lettres, chiffres, tirets (-) et underscores (_) uniquement
+                    </small>
+                </div>
+                
+                <div style="margin: 25px 0;">
+                    <button 
+                        type="submit" 
+                        class="test-btn" 
+                        style="background: #28a745; color: white; padding: 12px 25px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; text-decoration: none; display: inline-block;"
+                        onmouseover="this.style.background='#218838'" 
+                        onmouseout="this.style.background='#28a745'"
+                    >
+                        🚀 Créer mon compte sécurisé
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="endpoint warning">
+            <h3>⚠️ Informations importantes</h3>
+            <ul>
+                <li><strong>Sauvegardez immédiatement</strong> votre mot de passe généré</li>
+                <li><strong>Configurez le 2FA</strong> dès la création du compte</li>
+                <li><strong>Testez votre connexion</strong> avant de quitter la page</li>
+                <li><strong>Votre compte expirera dans 6 mois</strong> - vous serez notifié</li>
+                <li><strong>Le nom d'utilisateur ne peut pas être modifié</strong> après création</li>
+            </ul>
+        </div>
+        
+        <div class="endpoint" style="border-left-color: #007bff;">
+            <h3>🔒 Sécurité garantie</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
+                <div>
+                    <strong>🛡️ Chiffrement :</strong>
+                    <ul style="margin: 8px 0;">
+                        <li>Fernet (AES 128)</li>
+                        <li>Clés rotatives</li>
+                        <li>Salage automatique</li>
+                    </ul>
+                </div>
+                <div>
+                    <strong>📱 2FA TOTP :</strong>
+                    <ul style="margin: 8px 0;">
+                        <li>Google Authenticator</li>
+                        <li>Codes 6 chiffres</li>
+                        <li>Renouvellement 30s</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="{{ url_for('home') }}" class="test-btn" style="background: #6c757d; text-decoration: none; display: inline-block;">
+                ← Retour à l'accueil
+            </a>
+            <a href="{{ url_for('login_page') }}" class="test-btn" style="background: #007bff; text-decoration: none; display: inline-block;">
+                🔑 J'ai déjà un compte
+            </a>
+        </div>
+    </div>
+</body>
+</html>

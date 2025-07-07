@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - MSPR</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>🔑 Connexion sécurisée</h1>
+        <p>Connectez-vous avec votre nom d'utilisateur, mot de passe et code 2FA</p>
+        
+        <!-- Messages flash -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="endpoint {{ 'success' if category == 'success' else 'error' if category == 'error' else 'warning' }}">
+                            <strong>{{ '✅' if category == 'success' else '❌' if category == 'error' else '⚠️' }}</strong> {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        <div class="endpoint" style="border-left-color: #007bff;">
+            <h2>📝 Formulaire de connexion</h2>
+            <form method="POST" action="/login" style="max-width: 400px;">
+                <div style="margin-bottom: 20px;">
+                    <label for="username" style="display: block; margin-bottom: 8px; font-weight: bold;">
+                        👤 Nom d'utilisateur :
+                    </label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username" 
+                        required 
+                        autocomplete="username"
+                        style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 5px; font-size: 16px;"
+                        placeholder="Saisissez votre nom d'utilisateur"
+                    >
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <label for="password" style="display: block; margin-bottom: 8px; font-weight: bold;">
+                        🔐 Mot de passe :
+                    </label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        required 
+                        autocomplete="current-password"
+                        style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 5px; font-size: 16px;"
+                        placeholder="Saisissez votre mot de passe"
+                    >
+                    <small style="color: #666; font-size: 12px;">
+                        Mot de passe de 24 caractères généré automatiquement
+                    </small>
+                </div>
+                
+                <div style="margin-bottom: 25px;">
+                    <label for="totp_code" style="display: block; margin-bottom: 8px; font-weight: bold;">
+                        📱 Code 2FA (Google Authenticator) :
+                    </label>
+                    <input 
+                        type="text" 
+                        id="totp_code" 
+                        name="totp_code" 
+                        required 
+                        maxlength="6"
+                        pattern="[0-9]{6}"
+                        title="Code à 6 chiffres"
+                        autocomplete="one-time-code"
+                        style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 5px; font-size: 20px; text-align: center; letter-spacing: 2px;"
+                        placeholder="000000"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 6);"
+                    >
+                    <small style="color: #666; font-size: 12px;">
+                        Code à 6 chiffres de votre application Google Authenticator
+                    </small>
+                </div>
+                
+                <div style="margin: 25px 0;">
+                    <button 
+                        type="submit" 
+                        class="test-btn" 
+                        style="background: #007bff; color: white; padding: 12px 25px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; width: 100%;"
+                        onmouseover="this.style.background='#0056b3'" 
+                        onmouseout="this.style.background='#007bff'"
+                    >
+                        🚀 Se connecter
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="endpoint" style="border-left-color: #28a745;">
+            <h3>📱 À propos du code 2FA</h3>
+            <div style="background: #d4edda; padding: 15px; border-radius: 5px;">
+                <p><strong>Comment obtenir votre code 2FA :</strong></p>
+                <ol>
+                    <li>Ouvrez <strong>Google Authenticator</strong> sur votre mobile</li>
+                    <li>Trouvez votre compte dans la liste</li>
+                    <li>Le code à 6 chiffres se renouvelle toutes les 30 secondes</li>
+                    <li>Saisissez le code actuel dans le champ ci-dessus</li>
+                </ol>
+                <p style="margin-top: 10px; font-size: 14px; color: #155724;">
+                    <strong>💡 Astuce :</strong> Le code change toutes les 30 secondes. Attendez un nouveau code si le précédent expire.
+                </p>
+            </div>
+        </div>
+        
+        <div class="endpoint warning">
+            <h3>⚠️ Problèmes de connexion ?</h3>
+            <div style="margin-top: 15px;">
+                <h4>🔍 Vérifications :</h4>
+                <ul>
+                    <li><strong>Nom d'utilisateur :</strong> Vérifiez l'orthographe exacte</li>
+                    <li><strong>Mot de passe :</strong> Respectez la casse (majuscules/minuscules)</li>
+                    <li><strong>Code 2FA :</strong> Utilisez le code actuel (non expiré)</li>
+                    <li><strong>Compte expiré :</strong> Créez de nouveaux identifiants si nécessaire</li>
+                </ul>
+                
+                <h4 style="margin-top: 15px;">🆘 Solutions :</h4>
+                <ul>
+                    <li><strong>Compte expiré (6 mois) :</strong> Le système vous proposera de renouveler</li>
+                    <li><strong>2FA perdu :</strong> Contactez l'administrateur ou créez un nouveau compte</li>
+                    <li><strong>Mot de passe oublié :</strong> Créez un nouveau compte</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="endpoint" style="border-left-color: #6c757d;">
+            <h3>🔒 Sécurité de la connexion</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
+                <div>
+                    <strong>🛡️ Vérifications :</strong>
+                    <ul style="margin: 8px 0;">
+                        <li>Authentification triple facteur</li>
+                        <li>Déchiffrement sécurisé</li>
+                        <li>Validation TOTP temps réel</li>
+                        <li>Contrôle d'expiration</li>
+                    </ul>
+                </div>
+                <div>
+                    <strong>📊 Statut du compte :</strong>
+                    <ul style="margin: 8px 0;">
+                        <li>Validité : 6 mois maximum</li>
+                        <li>Renouvellement automatique</li>
+                        <li>Chiffrement Fernet AES</li>
+                        <li>Logs de sécurité</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="{{ url_for('home') }}" class="test-btn" style="background: #6c757d; text-decoration: none; display: inline-block;">
+                ← Retour à l'accueil
+            </a>
+            <a href="{{ url_for('create_page') }}" class="test-btn" style="background: #28a745; text-decoration: none; display: inline-block;">
+                👤 Créer un nouveau compte
+            </a>
+        </div>
+        
+        <div style="margin-top: 30px; padding: 15px; background: #f8f9fa; border-radius: 5px; text-align: center; font-size: 12px; color: #666;">
+            <p><strong>MSPR - Système d'Authentification Sécurisé</strong></p>
+            <p>Architecture Serverless | OpenFaaS | Kubernetes | PostgreSQL/MariaDB</p>
+        </div>
+    </div>
+
+    <script>
+        // Auto-focus sur le premier champ
+        document.getElementById('username').focus();
+        
+        // Formatage automatique du code 2FA
+        document.getElementById('totp_code').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/[^0-9]/g, '');
+            if (value.length > 6) {
+                value = value.substring(0, 6);
+            }
+            e.target.value = value;
+        });
+        
+        // Validation en temps réel
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function(e) {
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const totp = document.getElementById('totp_code').value;
+            
+            if (!username || !password || totp.length !== 6) {
+                e.preventDefault();
+                alert('⚠️ Veuillez remplir tous les champs correctement.\n\n• Nom d\'utilisateur requis\n• Mot de passe requis\n• Code 2FA à 6 chiffres requis');
+                return false;
+            }
+        });
+    </script>
+</body>
+</html>

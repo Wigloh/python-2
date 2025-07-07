@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compte créé - MSPR</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>✅ Compte créé avec succès !</h1>
+        <p>Votre compte <strong>{{ username }}</strong> a été créé et sécurisé</p>
+        
+        <div class="endpoint success">
+            <h2>🔐 Vos identifiants de connexion</h2>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 15px 0;">
+                <p><strong>Nom d'utilisateur :</strong> <code style="background: #e9ecef; padding: 2px 6px; border-radius: 3px;">{{ username }}</code></p>
+                <p><strong>Mot de passe :</strong> <code style="background: #e9ecef; padding: 2px 6px; border-radius: 3px; font-size: 12px;">{{ password }}</code></p>
+            </div>
+            
+            <div style="text-align: center; margin: 20px 0;">
+                <h3>📱 QR Code - Mot de passe</h3>
+                <p style="font-size: 14px; color: #666;">Scannez pour sauvegarder votre mot de passe</p>
+                <img src="data:image/png;base64,{{ password_qr }}" alt="QR Code Mot de passe" class="qr-code" style="max-width: 200px; border: 2px solid #007bff;">
+            </div>
+        </div>
+        
+        <div class="endpoint">
+            <h2>🔑 Configuration 2FA (Google Authenticator)</h2>
+            <div style="text-align: center; margin: 20px 0;">
+                <h3>📲 QR Code - 2FA</h3>
+                <p style="font-size: 14px; color: #666;">Scannez avec Google Authenticator</p>
+                <img src="data:image/png;base64,{{ totp_qr }}" alt="QR Code 2FA" class="qr-code" style="max-width: 200px; border: 2px solid #28a745;">
+            </div>
+            
+            <div style="background: #d4edda; padding: 15px; border-radius: 5px; border-left: 4px solid #28a745;">
+                <h4>📋 Instructions 2FA :</h4>
+                <ol>
+                    <li>Téléchargez <strong>Google Authenticator</strong> sur votre mobile</li>
+                    <li>Ouvrez l'app et scannez le QR Code ci-dessus</li>
+                    <li>L'app générera des codes à 6 chiffres toutes les 30 secondes</li>
+                    <li>Utilisez ces codes pour vous connecter</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="endpoint warning">
+            <h3>⚠️ Important - Sauvegardez vos informations</h3>
+            <ul>
+                <li><strong>Sauvegardez votre mot de passe</strong> dans un gestionnaire sécurisé</li>
+                <li><strong>Configurez le 2FA</strong> avant de fermer cette page</li>
+                <li><strong>Testez la connexion</strong> avant de quitter</li>
+                <li><strong>Votre compte expire dans 6 mois</strong></li>
+            </ul>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="{{ url_for('login_page') }}" class="test-btn" style="background: #28a745; text-decoration: none; display: inline-block;">🔓 Tester la connexion</a>
+            <a href="{{ url_for('home') }}" class="test-btn" style="background: #6c757d; text-decoration: none; display: inline-block;">← Retour à l'accueil</a>
+        </div>
+    </div>
+</body>
+</html>

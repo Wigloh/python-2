@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MSPR - Système d'Authentification Sécurisé</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 MSPR - Système d'Authentification Sécurisé</h1>
+        <p><strong>Application Flask complète</strong> avec handlers OpenFaaS pour l'authentification 2FA, chiffrement des mots de passe, et gestion d'expiration.</p>
+        
+        <div class="status success">
+            <strong>✅ Statut :</strong> Tous les handlers sont fonctionnels !
+        </div>
+        
+        <h2>📋 Endpoints API Complets</h2>
+        
+        <div class="endpoint">
+            <span class="method post">POST</span> <strong>/api/create-user</strong>
+            <p><strong>Créer un nouvel utilisateur</strong> avec mot de passe sécurisé, chiffrement et QR Code</p>
+            <pre>{"username": "monuser", "password": "MonMotDePasse123!"}</pre>
+            <button class="test-btn" onclick="testCreateUser()">Créer Utilisateur Test</button>
+        </div>
+        
+        <div class="endpoint">
+            <span class="method post">POST</span> <strong>/api/login</strong>
+            <p><strong>Connexion complète</strong> avec vérification mot de passe, 2FA et gestion d'expiration</p>
+            <pre>{"username": "monuser", "password": "MonMotDePasse123!", "totp_code": "123456"}</pre>
+            <button class="test-btn" onclick="testLogin()">Tester Connexion</button>
+        </div>
+        
+        <div class="endpoint">
+            <span class="method post">POST</span> <strong>/api/generate-2fa</strong>
+            <p><strong>Générer le 2FA</strong> avec QR Code pour Google Authenticator</p>
+            <pre>{"username": "monuser"}</pre>
+            <button class="test-btn" onclick="testGenerate2FA()">Générer 2FA</button>
+        </div>
+        
+        <div class="endpoint">
+            <span class="method post">POST</span> <strong>/api/verify-2fa</strong>
+            <p><strong>Vérifier un code 2FA</strong> (TOTP)</p>
+            <pre>{"username": "monuser", "code_2fa": "123456"}</pre>
+            <button class="test-btn" onclick="testVerify2FA()">Vérifier 2FA</button>
+        </div>
+        
+        <div class="endpoint">
+            <span class="method get">GET</span> <strong>/health</strong>
+            <p><strong>Santé du service</strong> et statut des composants</p>
+            <button class="test-btn" onclick="testHealth()">Vérifier Santé</button>
+        </div>
+        
+        <div class="endpoint">
+            <span class="method get">GET</span> <strong>/api/test-full-flow</strong>
+            <p><strong>Test complet</strong> du flux utilisateur (création → 2FA → connexion)</p>
+            <button class="test-btn" onclick="testFullFlow()" style="background: #28a745;">Test Complet</button>
+        </div>
+        
+        <h2>📊 Résultats des tests</h2>
+        <div id="results"></div>
+        
+        <h2>📚 Documentation</h2>
+        <div class="endpoint">
+            <h3>🔒 Fonctionnalités de sécurité</h3>
+            <ul>
+                <li><strong>Chiffrement des mots de passe</strong> : Bcrypt + Fernet</li>
+                <li><strong>Authentification 2FA</strong> : TOTP compatible Google Authenticator</li>
+                <li><strong>QR Codes</strong> : Pour configuration facile du 2FA</li>
+                <li><strong>Gestion d'expiration</strong> : Mots de passe avec durée de vie</li>
+                <li><strong>Base de données sécurisée</strong> : PostgreSQL avec chiffrement</li>
+            </ul>
+        </div>
+        
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,70 @@
+/* Styles pour les formulaires */
+
+/* Conteneur de formulaire */
+.form-container {
+    max-width: 500px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Formulaires */
+form {
+    margin: 20px 0;
+}
+
+/* Labels */
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+/* Champs de saisie */
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+/* Boutons de soumission */
+input[type="submit"] {
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+}
+
+/* Bouton de création */
+.btn-create {
+    background: #28a745;
+}
+
+.btn-create:hover {
+    background: #218838;
+}
+
+/* Bouton de connexion */
+.btn-login {
+    background: #007bff;
+}
+
+.btn-login:hover {
+    background: #0056b3;
+}
+
+/* Aide pour les formulaires */
+.form-help {
+    font-size: 14px;
+    color: #666;
+    margin-top: 10px;
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion réussie - MSPR</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 Connexion réussie !</h1>
+        <p>Bienvenue <strong>{{ username }}</strong>, vous êtes maintenant connecté de manière sécurisée</p>
+        
+        <div class="endpoint success">
+            <h2>✅ Authentification validée</h2>
+            <ul>
+                <li><strong>✅ Nom d'utilisateur</strong> : Vérifié</li>
+                <li><strong>✅ Mot de passe</strong> : Correct et déchiffré</li>
+                <li><strong>✅ Code 2FA</strong> : Validé en temps réel</li>
+                <li><strong>✅ Compte actif</strong> : Non expiré</li>
+            </ul>
+        </div>
+        
+        <div class="endpoint">
+            <h2>🔒 Session sécurisée</h2>
+            <p>Votre session est maintenant active avec les protections suivantes :</p>
+            <ul>
+                <li><strong>Chiffrement complet</strong> des données de session</li>
+                <li><strong>Vérification continue</strong> de l'intégrité</li>
+                <li><strong>Expiration automatique</strong> après inactivité</li>
+                <li><strong>Protection CSRF</strong> et injection SQL</li>
+            </ul>
+        </div>
+        
+        <div class="endpoint">
+            <h2>📊 Informations de votre compte</h2>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <p><strong>Utilisateur :</strong> {{ username }}</p>
+                <p><strong>Dernière connexion :</strong> <span id="current-time"></span></p>
+                <p><strong>Statut :</strong> <span style="color: #28a745; font-weight: bold;">✅ Actif</span></p>
+                <p><strong>Sécurité :</strong> <span style="color: #28a745; font-weight: bold;">🔐 2FA Activé</span></p>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="{{ url_for('home') }}" class="test-btn" style="background: #007bff; text-decoration: none; display: inline-block;">🏠 Retour à l'accueil</a>
+            <a href="{{ url_for('create_page') }}" class="test-btn" style="background: #28a745; text-decoration: none; display: inline-block;">👥 Créer un autre compte</a>
+            <a href="{{ url_for('test_interface') }}" class="test-btn" style="background: #6c757d; text-decoration: none; display: inline-block;">🔧 Interface de test</a>
+        </div>
+    </div>
+    
+    <script>
+        // Afficher l'heure actuelle
+        document.getElementById('current-time').textContent = new Date().toLocaleString('fr-FR');
+    </script>
+</body>
+</html>

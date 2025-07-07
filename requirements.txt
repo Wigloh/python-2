@@ -1,0 +1,8 @@
+Flask==2.3.3
+requests==2.31.0
+cryptography==41.0.7
+psycopg2-binary==2.9.9
+qrcode==7.4.2
+Pillow==10.1.0
+pyotp==2.9.0
+python-dateutil==2.8.2

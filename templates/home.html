@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MSPR - Système d'Authentification Sécurisé</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 MSPR - Système d'Authentification Sécurisé</h1>
+        <p>Bienvenue sur notre système d'authentification avec double facteur (2FA)</p>
+        
+        <!-- Messages flash -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="endpoint {{ 'success' if category == 'success' else 'error' if category == 'error' else 'warning' }}">
+                            <strong>{{ '✅' if category == 'success' else '❌' if category == 'error' else '⚠️' }}</strong> {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        <div class="status success">
+            <strong>✅ Système opérationnel</strong> - Tous les services sont fonctionnels
+        </div>
+        
+        <h2>🚀 Actions disponibles</h2>
+        
+        <div class="endpoint">
+            <h3>👤 Créer un nouveau compte</h3>
+            <p>Générez automatiquement un compte sécurisé avec mot de passe complexe et authentification 2FA</p>
+            <ul>
+                <li>Mot de passe de 24 caractères généré automatiquement</li>
+                <li>QR Code pour sauvegarder votre mot de passe</li>
+                <li>Configuration 2FA pour Google Authenticator</li>
+                <li>Chiffrement complet des données</li>
+            </ul>
+            <a href="{{ url_for('create_page') }}" class="test-btn" style="text-decoration: none; display: inline-block;">Créer un compte</a>
+        </div>
+        
+        <div class="endpoint">
+            <h3>🔑 Se connecter</h3>
+            <p>Connectez-vous avec votre nom d'utilisateur, mot de passe et code 2FA</p>
+            <ul>
+                <li>Authentification triple facteur</li>
+                <li>Vérification en temps réel du code 2FA</li>
+                <li>Détection automatique des comptes expirés</li>
+                <li>Gestion sécurisée des sessions</li>
+            </ul>
+            <a href="{{ url_for('login_page') }}" class="test-btn" style="text-decoration: none; display: inline-block;">Se connecter</a>
+        </div>
+        
+        <div class="endpoint">
+            <h3>🔧 Interface de test (Développeurs)</h3>
+            <p>Interface technique pour tester les APIs et les endpoints</p>
+            <a href="{{ url_for('test_interface') }}" class="test-btn" style="text-decoration: none; display: inline-block; background: #6c757d;">Interface de test</a>
+        </div>
+        
+        <h2>📚 Fonctionnalités de sécurité</h2>
+        <div class="endpoint">
+            <ul>
+                <li><strong>🔒 Chiffrement des mots de passe</strong> : Cryptographie Fernet</li>
+                <li><strong>🔑 Authentification 2FA</strong> : TOTP compatible Google Authenticator</li>
+                <li><strong>📱 QR Codes sécurisés</strong> : Génération et affichage en base64</li>
+                <li><strong>⏰ Gestion d'expiration</strong> : Comptes valides 6 mois</li>
+                <li><strong>🗄️ Base de données sécurisée</strong> : PostgreSQL avec chiffrement</li>
+                <li><strong>☁️ Architecture serverless</strong> : Compatible OpenFaaS</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

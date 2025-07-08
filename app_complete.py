@@ -19,7 +19,7 @@ app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-producti
 os.environ['DB_HOST'] = 'localhost'
 os.environ['DB_NAME'] = 'cofrap'
 os.environ['DB_USER'] = 'postgres'
-os.environ['DB_PASSWORD'] = 'password'
+os.environ['DB_PASSWORD'] = 'mspr2024'
 
 @app.route('/')
 def home():

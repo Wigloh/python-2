@@ -84,7 +84,8 @@ echo 🗄️ Base de donnees : PostgreSQL Docker (cofrap)
 echo 🐳 Conteneur : postgres-mspr
 echo.
 
-REM Demarrage de l'application Flask
-python app_complete.py
+REM Demarrage de l'application Flask via PowerShell (meilleure gestion des variables)
+echo 🔧 Lancement via PowerShell pour les variables d'environnement...
+powershell -ExecutionPolicy Bypass -File "%~dp0start_app_powershell.ps1"
 
 pause

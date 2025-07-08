@@ -106,6 +106,15 @@ echo 🗄️ Base de donnees : PostgreSQL Docker (cofrap)
 echo 🐳 Conteneur : postgres-mspr
 echo.
 echo 📍 ETAPE 7 : Demarrage de l'application Flask
-python app_complete.py
+echo 🔧 Configuration des variables pour Python...
+setx DB_HOST "localhost" >nul 2>&1
+setx DB_NAME "cofrap" >nul 2>&1
+setx DB_USER "postgres" >nul 2>&1
+setx DB_PASSWORD "mspr2024" >nul 2>&1
+setx FERNET_KEY "ZmDfcTF7_60GrrY167zsiPd67pEvs0aGOv2oasOM1Pg=" >nul 2>&1
+setx SECRET_KEY "dev-secret-key-mspr-2025" >nul 2>&1
+
+REM Alternative: definir dans le meme processus
+set "DB_HOST=localhost" && set "DB_NAME=cofrap" && set "DB_USER=postgres" && set "DB_PASSWORD=mspr2024" && set "FERNET_KEY=ZmDfcTF7_60GrrY167zsiPd67pEvs0aGOv2oasOM1Pg=" && set "SECRET_KEY=dev-secret-key-mspr-2025" && python app_complete.py
 
 pause

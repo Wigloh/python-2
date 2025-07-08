@@ -3,6 +3,12 @@ echo ========================================
 echo 🚀 MSPR - Demarrage Ultra-Rapide Docker
 echo ========================================
 echo.
+
+REM Changement vers le dossier parent (python-2)
+cd /d "%~dp0.."
+echo 📁 Repertoire de travail : %CD%
+echo.
+
 echo Ce script execute automatiquement toutes les etapes :
 echo - Verification des prerequis
 echo - Demarrage du conteneur PostgreSQL

@@ -3,6 +3,12 @@ echo =======================================
 echo 🛠️ MSPR - Utilitaires de Maintenance
 echo =======================================
 echo.
+
+REM Changement vers le dossier parent (python-2)
+cd /d "%~dp0.."
+echo 📁 Repertoire de travail : %CD%
+echo.
+
 echo Choisissez une action :
 echo.
 echo [1] Arreter tous les conteneurs PostgreSQL

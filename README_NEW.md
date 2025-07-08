@@ -374,33 +374,15 @@ curl http://localhost:5000/health
 start http://localhost:5000
 ```
 
-### **🚨 Services à vérifier - PostgreSQL Docker uniquement**
+### **🎯 Avantages des scripts automatiques :**
+- ✅ **Zéro configuration manuelle** requise
+- ✅ **Vérifications automatiques** des prérequis
+- ✅ **Gestion d'erreurs** intégrée
+- ✅ **Messages informatifs** à chaque étape
+- ✅ **Démarrage en 2 minutes** au lieu de 10
+- ✅ **Point d'entrée unique** : `DEMARRER-MSPR.bat`
 
-| **Composant** | **Comment vérifier** | **Commande de vérification** |
-|---------------|----------------------|------------------------------|
-| **Docker Desktop** | Service démarré | `docker --version` |
-| **Conteneur PostgreSQL** | Conteneur actif | `docker ps \| findstr postgres-mspr` |
-| **Base de données** | Tables créées | `docker exec -it postgres-mspr psql -U postgres -d cofrap -c "\dt"` |
-| **Application Flask** | Serveur démarré | Ouvrir `http://localhost:5000` |
-
-**⚠️ Important :** Suivez les étapes dans l'ordre exact ci-dessus.
-
-### **✅ Vérification que PostgreSQL Docker et l'application fonctionnent**
-
-```powershell
-# 1. Vérifiez que le conteneur PostgreSQL est démarré
-docker ps | findstr postgres-mspr
-
-# 2. Testez la connexion à la base
-docker exec -it postgres-mspr psql -U postgres -d cofrap -c "SELECT COUNT(*) FROM users;"
-
-# 3. Testez l'application Flask
-curl http://localhost:5000/health
-# Ou dans un navigateur : http://localhost:5000/health
-
-# 4. Testez l'interface complète
-start http://localhost:5000
-```
+> **💡 Conseil :** Si vous débutez avec le projet, utilisez `DEMARRER-MSPR.bat` puis option 1 pour une première configuration sans effort !
 
 ---
 
@@ -611,10 +593,13 @@ script python/
 │   └── database_setup.sql     # Structure PostgreSQL
 │
 └── 📁 UTILITAIRES
+    ├── DEMARRER-MSPR.bat          # 🚀 LANCEUR PRINCIPAL - Point d'entrée unique
     ├── scripts-demarrage/         # Scripts automatiques (menu + ultra-rapide)
     │   ├── menu-demarrage.bat    # Menu principal de démarrage
     │   ├── demarrage-ultra-rapide.bat  # Script automatique complet
     │   ├── utilitaires-maintenance.bat # Outils de maintenance
+    │   ├── start_app_docker.bat  # Script Docker détaillé
+    │   ├── start_app_mspr.bat    # Script PostgreSQL local (déprécié)
     │   └── README-SCRIPTS.md     # Documentation des scripts
     ├── database_setup.sql         # Structure PostgreSQL
     └── PROJET_ESSENTIEL.md        # Documentation structure
@@ -1053,35 +1038,43 @@ Pour simplifier la configuration, des scripts automatiques sont disponibles dans
 
 ### **⚡ Option 1 : Démarrage ultra-rapide (Recommandé)**
 ```powershell
-# Exécute automatiquement toutes les étapes en 2 minutes
-scripts-demarrage\demarrage-ultra-rapide.bat
+# NOUVELLE MÉTHODE : Lanceur principal depuis la racine
+.\DEMARRER-MSPR.bat
+
+# Puis choisissez l'option 1 : Démarrage ultra-rapide
 ```
 
 ### **📋 Option 2 : Menu interactif**
 ```powershell
-# Affiche un menu pour choisir la méthode de démarrage
-scripts-demarrage\menu-demarrage.bat
+# Via le lanceur principal (recommandé)
+.\DEMARRER-MSPR.bat
+
+# Puis choisissez l'option 2 : Menu de démarrage
 ```
 
 ### **🛠️ Option 3 : Utilitaires de maintenance**
 ```powershell
-# Outils pour maintenance, dépannage et nettoyage
-scripts-demarrage\utilitaires-maintenance.bat
+# Via le lanceur principal (recommandé)
+.\DEMARRER-MSPR.bat
+
+# Puis choisissez l'option 3 : Utilitaires de maintenance
 ```
 
-### **🎯 Avantages des scripts automatiques :**
-- ✅ **Zéro configuration manuelle** requise
-- ✅ **Vérifications automatiques** des prérequis
-- ✅ **Gestion d'erreurs** intégrée
-- ✅ **Messages informatifs** à chaque étape
-- ✅ **Démarrage en 2 minutes** au lieu de 10
+### **⚡ GUIDE DE DÉPANNAGE RAPIDE**
 
-> **💡 Conseil :** Si vous débutez avec le projet, utilisez `demarrage-ultra-rapide.bat` pour une première configuration sans effort !
+#### **❌ Problème : "start_app_docker.bat n'est pas reconnu"**
+
+**✅ Solution :**
+```powershell
+# NOUVELLE MÉTHODE (recommandée) :
+# Utilisez le lanceur principal depuis le dossier python-2
+cd "C:\Users\louis.fievet\OneDrive - Ifag Paris\EPSI\MSPR\TPRE912\python-2"
+.\DEMARRER-MSPR.bat
+
+# Puis choisissez l'option 1 : Démarrage ultra-rapide
+```
+
+**📋 Explication :**
+Les scripts ont été réorganisés dans le dossier `scripts-demarrage/`. Le nouveau lanceur `DEMARRER-MSPR.bat` gère automatiquement les chemins corrects.
 
 ---
-
-## 🔧 **Configuration manuelle étape par étape**
-
-Si vous préférez comprendre et exécuter chaque étape manuellement :
-
-...existing code...

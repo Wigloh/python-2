@@ -3,6 +3,10 @@ echo ================================
 echo 🔐 MSPR - Scripts de Demarrage
 echo ================================
 echo.
+
+REM Changement vers le dossier parent (python-2)
+cd /d "%~dp0.."
+
 echo Choisissez votre methode de demarrage :
 echo.
 echo [1] Demarrage complet automatique (Docker + PostgreSQL)
@@ -19,13 +23,13 @@ goto invalid
 :docker
 echo.
 echo 🐳 Lancement du script Docker...
-call start_app_docker.bat
+call "%~dp0start_app_docker.bat"
 goto end
 
 :local
 echo.
 echo 🗄️ Lancement du script PostgreSQL local...
-call start_app_mspr.bat
+call "%~dp0start_app_mspr.bat"
 goto end
 
 :invalid

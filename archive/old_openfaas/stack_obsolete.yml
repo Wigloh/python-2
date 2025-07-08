@@ -1,0 +1,100 @@
+# Configuration OpenFaaS pour les handlers MSPR
+# 🔧 MODIFIER les valeurs selon votre environnement
+
+version: 1.0
+provider:
+  name: openfaas
+  gateway: http://localhost:8080  # 📝 Pour développement local
+
+functions:
+  create-user:
+    lang: python3
+    handler: ./create-user
+    image: create-user:latest  # 📝 Image locale pour test
+    environment:
+      DB_HOST: localhost  # 📝 PostgreSQL local pour test
+      DB_NAME: cofrap
+      APP_NAME: "MSPR App"
+      ISSUER_NAME: "MSPR Security"
+    secrets:
+      - postgresql-secret
+      - encryption-secret
+    limits:
+      memory: "256Mi"
+      cpu: "200m"
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+
+  login-user:
+    lang: python3
+    handler: ./login-user
+    image: login-user:latest  # 📝 Image locale pour test
+    environment:
+      DB_HOST: localhost  # 📝 PostgreSQL local pour test
+      DB_NAME: cofrap
+    secrets:
+      - postgresql-secret
+      - encryption-secret
+    limits:
+      memory: "256Mi"
+      cpu: "200m"
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+
+  generate-2fa:
+    lang: python3
+    handler: ./generate-2fa
+    image: generate-2fa:latest  # 📝 Image locale pour test
+    environment:
+      DB_HOST: localhost  # 📝 PostgreSQL local pour test
+      DB_NAME: cofrap
+      APP_NAME: "MSPR App"
+      ISSUER_NAME: "MSPR Security"
+    secrets:
+      - postgresql-secret
+      - encryption-secret
+    limits:
+      memory: "256Mi"
+      cpu: "200m"
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+
+# 📝 COMMANDES DE DÉPLOIEMENT :
+
+# 1. Créer les secrets OpenFaaS
+# kubectl create secret generic postgresql-secret \
+#   --from-literal=POSTGRES_USER=postgres \
+#   --from-literal=POSTGRES_PASSWORD=your_password \
+#   --from-literal=POSTGRES_DB=cofrap \
+#   --namespace=openfaas-fn
+
+# kubectl create secret generic encryption-secret \
+#   --from-literal=FERNET_KEY=ZmDfcTF7_60GrrY167zsiPd67pEvs0aGOv2oasOM1Pg= \
+#   --namespace=openfaas-fn
+
+# 2. Créer les fonctions
+# faas-cli new --lang python3 create-user
+# faas-cli new --lang python3 login-user
+# faas-cli new --lang python3 generate-2fa
+
+# 3. Copier les handlers
+# cp handler.py create-user/handler.py
+# cp login_handler.py login-user/handler.py
+# cp generate_2fa_handler.py generate-2fa/handler.py
+
+# 4. Copier les requirements
+# cp openfaas_requirements.txt create-user/requirements.txt
+# cp openfaas_requirements.txt login-user/requirements.txt
+# cp openfaas_requirements.txt generate-2fa/requirements.txt
+
+# 5. Construire et déployer
+# faas-cli build -f stack.yml
+# faas-cli deploy -f stack.yml
+
+# 6. Tester les fonctions
+# curl -X POST http://gateway.openfaas:8080/function/create-user \
+#   -H "Content-Type: application/json" \
+#   -d '{"username": "testuser"}'

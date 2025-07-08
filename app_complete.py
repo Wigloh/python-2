@@ -13,13 +13,15 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 app = Flask(__name__)
-app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
+app.secret_key = 'mspr-secret-key-2025-projet-education'
 
-# Configuration pour utiliser localhost (Docker PostgreSQL)
+# Configuration PostgreSQL Docker - VALEURS FIXES POUR LE PROJET
+# Note: Ces variables sont définies pour les handlers qui les utilisent encore
 os.environ['DB_HOST'] = 'localhost'
 os.environ['DB_NAME'] = 'cofrap'
 os.environ['DB_USER'] = 'postgres'
 os.environ['DB_PASSWORD'] = 'mspr2024'
+os.environ['FERNET_KEY'] = 'ZmDfcTF7_60GrrY167zsiPd67pEvs0aGOv2oasOM1Pg='
 
 @app.route('/')
 def home():

@@ -12,23 +12,22 @@ def get_encryption_key():
     Récupère la clé de chiffrement depuis les variables d'environnement
     ou utilise une clé par défaut pour le développement
     """
-    env_key = os.environ.get('FERNET_KEY')
-    if env_key:
-        return env_key.encode()
-    else:
-        # Clé par défaut pour le développement - CHANGEZ EN PRODUCTION !
-        return b'ZmDfcTF7_60GrrY167zsiPd67pEvs0aGOv2oasOM1Pg='
+def get_encryption_key():
+    """
+    Clé de chiffrement fixe pour le projet MSPR
+    """
+    # Clé fixe pour le projet - MÊME CLÉ POUR TOUS LES HANDLERS !
+    return b'ZmDfcTF7_60GrrY167zsiPd67pEvs0aGOv2oasOM1Pg='
 
-# Clé de chiffrement FIXE (à sécuriser via un secret Kubernetes en production)
-# ATTENTION : Cette clé doit être la même pour tous les appels !
+# Clé de chiffrement FIXE (identique pour tous les handlers)
 FERNET_KEY = get_encryption_key()
 fernet = Fernet(FERNET_KEY)
 
-# Configuration base de données
-DB_HOST = "localhost"  # 📝 Pour tests avec Docker PostgreSQL local
-DB_NAME = "cofrap"
-DB_USER = "postgres"
-DB_PASSWORD = "password"
+# Configuration base de données - VALEURS FIXES POUR LE PROJET
+DB_HOST = 'localhost'        # PostgreSQL Docker sur localhost
+DB_NAME = 'cofrap'          # Nom de la base de données
+DB_USER = 'postgres'        # Utilisateur PostgreSQL
+DB_PASSWORD = 'mspr2024'    # Mot de passe PostgreSQL Docker
 
 def get_user_by_username(username):
     """Récupère un utilisateur par son nom d'utilisateur"""

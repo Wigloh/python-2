@@ -8,34 +8,23 @@ import psycopg2
 from datetime import datetime
 from cryptography.fernet import Fernet
 
-# Fonction pour obtenir la clé de chiffrement (identique aux autres handlers)
+# Fonction pour obtenir la clé de chiffrement
 def get_encryption_key():
     """
-    Récupère la clé de chiffrement depuis les variables d'environnement
-    ou utilise une clé par défaut pour le développement
-    
-    🔧 DÉPLOIEMENT: Configuration de la clé de chiffrement
+    Clé de chiffrement fixe pour le projet MSPR
     """
-    env_key = os.environ.get('FERNET_KEY')
-    if env_key:
-        return env_key.encode()
-    else:
-        # 📝 DÉVELOPPEMENT: Clé par défaut - DOIT ÊTRE LA MÊME dans tous les handlers !
-        # 📝 PRODUCTION: Supprimer cette ligne et utiliser UNIQUEMENT la variable d'environnement
-        # 📝 KUBERNETES: Définir FERNET_KEY comme Secret dans le cluster
-        return b'ZmDfcTF7_60GrrY167zsiPd67pEvs0aGOv2oasOM1Pg='
+    # Clé fixe pour le projet - MÊME CLÉ POUR TOUS LES HANDLERS !
+    return b'ZmDfcTF7_60GrrY167zsiPd67pEvs0aGOv2oasOM1Pg='
 
-# Clé de chiffrement FIXE (identique aux autres handlers)
+# Clé de chiffrement FIXE (identique pour tous les handlers)
 FERNET_KEY = get_encryption_key()
 fernet = Fernet(FERNET_KEY)
 
-# Configuration base de données (identique aux autres handlers)
-# 🔧 DÉPLOIEMENT: Modifier ces valeurs pour votre environnement
-DB_HOST = "postgres"  # 📝 KUBERNETES: Nom du service PostgreSQL dans le cluster
-                      # 📝 LOCAL: "localhost" pour développement
-DB_NAME = "cofrap"    # 📝 PRODUCTION: Nom de votre base de données
-DB_USER = "postgres"  # 📝 PRODUCTION: Utilisateur PostgreSQL (utiliser les secrets K8s)
-DB_PASSWORD = "password"  # 📝 PRODUCTION: Mot de passe PostgreSQL (utiliser les secrets K8s)
+# Configuration base de données - VALEURS FIXES POUR LE PROJET
+DB_HOST = 'localhost'        # PostgreSQL Docker sur localhost
+DB_NAME = 'cofrap'          # Nom de la base de données
+DB_USER = 'postgres'        # Utilisateur PostgreSQL
+DB_PASSWORD = 'mspr2024'    # Mot de passe PostgreSQL Docker
 
 # Configuration 2FA
 # 🔧 DÉPLOIEMENT: Personnaliser ces valeurs pour votre organisation

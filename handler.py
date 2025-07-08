@@ -101,8 +101,8 @@ def handle(req):
         totp_secret = generate_totp_secret()
         encrypted_2fa_secret = fernet.encrypt(totp_secret.encode()).decode()
 
-        # Génération du QR Code pour le mot de passe (pour info)
-        password_qr = generate_qrcode(f"Password: {password}")
+        # Génération du QR Code pour le mot de passe avec identifiant (pour info)
+        password_qr = generate_qrcode(f"Username: {username}\nPassword: {password}")
         
         # Génération du QR Code pour le 2FA (Google Authenticator)
         totp_qr = generate_totp_qr_code(username, totp_secret)
